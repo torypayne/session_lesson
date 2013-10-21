@@ -167,9 +167,9 @@ Here's how we use it. Let's finish our method:
         password = request.form.get("password")
 
         if model.authenticate(username, password):
-            flash('message') = "User authenticated!"
+            flash("User authenticated")
         else:
-            flash('message') = "Password incorrect, there may be a ferret stampede in progress!"
+            flash("Password incorrect, there may be a ferret stampede in progress!")
 
         return redirect(url_for("index"))
 
