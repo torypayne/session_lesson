@@ -245,7 +245,7 @@ Create a sqlite3 database, thewall.db, with the following schema
     created_at - datetime
     content - text
 
-You'll add some functionality to model.py to connect to this database. If you need a refresher, visit the [sql lesson](http://github.com/chriszf/sql_lesson) or your own implementation, and go ahead and copy the connection code over from _that_ mode.py.
+You'll add some functionality to model.py to connect to this database. If you need a refresher, visit the [sql lesson](http://github.com/chriszf/sql_lesson) or your own implementation, and go ahead and copy the connection code over from hackbright\_app.py.
 
 You're going to build a 'wall' (think of a site you know, it rhymes with... Oh, I don't know. Space cook.).
 
