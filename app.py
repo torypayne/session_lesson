@@ -6,11 +6,40 @@ app.secret_key = "shhhhthisisasecret"
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    if session.get("username"):
+        return "User %s is logged in!" % session['username']
+    else:
+        return render_template("index.html")
+    # return render_template("index.html")
 
 @app.route("/", methods=["POST"])
 def process_login():
-    return render_template("login.html")
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+    # username = model.authenticate(username, password)
+    # if username != None:
+    #     flash('message') = "User authenticated!"
+    #     session['username'] = username
+    # else:
+    #     flash('message') = "Password incorrect, there may be a ferret stampede in progress. Save yourself!"
+
+    # return redirect(url_for("index"))
+    if model.authenticate(username, password):
+        flash("User authenticated")
+        session['username'] = username
+    else:
+        flash("Password incorrect, there may be a ferret stampede in progress. Save yourself!")
+        
+    return redirect(url_for("index"))
+
+@app.route("/logout")
+def clear_session():
+    session.clear()
+    flash("You logged out.")
+    print "You logged out!!"
+    #call session.clear() method
+    return redirect(url_for("index"))
 
 @app.route("/register")
 def register():
