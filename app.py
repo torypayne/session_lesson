@@ -39,17 +39,16 @@ def register():
     return render_template("register.html")
 
 @app.route("/user/<username>")
-def user_wall():
+def user_wall(username):
     #take username, look up user_id
     #to do this, write get_user_by_name func in model.py
     #call this function
     #use user_id to look up wall_posts
     #return posts/rows to wall.html
     model.connect_to_db()
-    username = request.args.get("username")
     user_id = model.get_userid_by_name(username)
     wall_posts = model.get_wall_posts(user_id)
-    html = render_template("wall.html", wall_posts=wall_posts)
+    html = render_template("wall.html", username=username, wall_posts=wall_posts)
     return html
 
 

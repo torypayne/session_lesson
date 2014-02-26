@@ -22,22 +22,28 @@ def authenticate(username, password):
 
 def get_userid_by_name(username):
     #write function to take username, look up user_id
-    pass
+    query = """SELECT id FROM users WHERE username = ?"""
+    DB.execute(query, (username,))
+    row = DB.fetchone()
+    return row[0]
 
 def get_username_by_id(userid):
-    pass
+    query = """SELECT username FROM users WHERE id = ?"""
+    DB.execute(query, (userid,))
+    row = DB.fetchone()
+    return row[0]
 
 def get_wall_posts(user_id):
-    connect_to_db()
-    query = """SELECT id, content, created_at, author_id FROM wall_posts WHERE owner_id = ? """
+    query = """SELECT id, content, created_at, author_id FROM wall_posts WHERE owner_id = ? ORDER BY created_at DESC"""
     DB.execute(query, (user_id,))
     rows = DB.fetchall()
-    posts = {}
+    posts = []
     for row in rows:
-        posts[row[0]] = {"author": row[3], "date": row[2], "content": row[1]}
+        post = {"author": get_username_by_id(row[3]), "date": row[2], "content": row[1]}
+        posts.append(post)
     print posts
     return posts
-  
+
 
 def connect_to_db():
     global DB, CONN
@@ -47,6 +53,7 @@ def connect_to_db():
 def main():
     connect_to_db()
     command = None
+    get_wall_posts(1)
     while command != "quit":
         pass
 
@@ -54,3 +61,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

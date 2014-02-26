@@ -14,3 +14,21 @@ form.signin input.form-control {
 form.signin input.btn {
     margin-top: 15px;
 }
+
+div.post {
+    border: 1px solid #000;
+    margin: 10px auto;
+    width: 500px;
+    padding: 5px;
+}
+
+h2 {
+    margin: 10px auto;
+    text-align: center;
+    padding: 20px;
+
+}
+
+div#logout {
+    float: right;
+}

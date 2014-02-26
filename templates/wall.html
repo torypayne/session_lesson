@@ -1,7 +1,20 @@
-<h2>Wall Posts</h2>
-<!-- Working with copied code from hackbright app exercise to figure out for-loop -->
 
-{% for key, value in posts.iteritems() %}
-  <p><strong>Project:</strong>{{key}}</a> <br> <strong>Grade:</strong> {{value}} 
-    <br><br></p>
-{% endfor %}
+{% extends 'master.html' %}
+    {% block body %}
+ 
+
+        <h2>{{username}}'s Wall</h2>
+
+            {% for i in wall_posts %}
+            <div class="post">
+                <strong>{{i["author"]}} | {{i["date"]}}<br /></strong>
+                <br />
+                {{i["content"]}}
+                
+            </div>
+            {% endfor %}
+            <div id="logout"><a href="/logout">log out</a></div>
+
+
+
+    {% endblock %}
