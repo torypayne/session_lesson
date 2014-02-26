@@ -1,4 +1,5 @@
 import sqlite3
+import datetime
 
 DB = None
 CONN = None
@@ -44,6 +45,15 @@ def get_wall_posts(user_id):
     print posts
     return posts
 
+def post_to_wall(wall_owner,author_id,content):
+    post_time = datetime.now()
+    post_time = post_time.strftime("%Y-%m-%d")
+    owner_id = get_userid_by_name(wall_owner)
+    query = """INSERT INTO wall_posts (owner_id, author_id, created_at, content) VALUES (?, ?, post_time, ?)"""
+    DB.execute(query, (owner_id,author_id,post_time,content))
+    CONN.commit()
+    print get_wall_posts(owner_id)
+
 
 def connect_to_db():
     global DB, CONN
@@ -53,7 +63,7 @@ def connect_to_db():
 def main():
     connect_to_db()
     command = None
-    get_wall_posts(1)
+    post_to_wall(1,1,"Wahoo! Posting from Python")
     while command != "quit":
         pass
 
