@@ -21,6 +21,22 @@ def authenticate(username, password):
     else:
         return None
 
+def create_account(username, password, password_verify):
+    #see if user already exists
+    query = """SELECT username FROM users where username = ?"""
+    DB.execute(query, (username,))
+    check_username = DB.fetchone()
+    if check_username != None:
+        return 1
+    elif hash(password) != hash(password_verify):
+        return 2
+    else:
+        query = """INSERT INTO users (username, password) VALUES (?, ?)"""
+        DB.execute(query, (username, password))
+        CONN.commit()
+        return "New user"
+
+
 def get_userid_by_name(username):
     #write function to take username, look up user_id
     query = """SELECT id FROM users WHERE username = ?"""
@@ -46,14 +62,12 @@ def get_wall_posts(user_id):
     return posts
 
 def post_to_wall(wall_owner,author_id,content):
-    post_time = datetime.now()
-    post_time = post_time.strftime("%Y-%m-%d")
+    created_at = datetime.datetime.now()
+    created_at = created_at.strftime("%Y-%m-%d %H:%M")
     owner_id = get_userid_by_name(wall_owner)
-    query = """INSERT INTO wall_posts (owner_id, author_id, created_at, content) VALUES (?, ?, post_time, ?)"""
-    DB.execute(query, (owner_id,author_id,post_time,content))
+    query = """INSERT INTO wall_posts (owner_id, author_id, created_at, content) VALUES (?, ?, ?, ?)"""
+    DB.execute(query, (owner_id,author_id, created_at, content))
     CONN.commit()
-    print get_wall_posts(owner_id)
-
 
 def connect_to_db():
     global DB, CONN
@@ -63,7 +77,7 @@ def connect_to_db():
 def main():
     connect_to_db()
     command = None
-    post_to_wall(1,1,"Wahoo! Posting from Python")
+    print create_account("liz", "gurlplz", "gurlplz")
     while command != "quit":
         pass
 

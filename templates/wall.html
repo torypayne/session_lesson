@@ -15,6 +15,13 @@
             {% endfor %}
             <div id="logout"><a href="/logout">log out</a></div>
 
-
-
+        {% if session %}
+        <div>
+            <form class="wall_post" method="POST">
+                <h2 class="wallpost-heading">Post to {{username}}'s wall</h2>
+                <input type="text" class="form-control" placeholder="content" name="content">
+                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Submit">
+            </form>
+        </div>
+        {% endif %}
     {% endblock %}

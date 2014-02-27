@@ -6,8 +6,13 @@
     <body>
         {% block body %}
         <div class="container">
-            <form class="signin">
+            <form class="signin" method="POST">
                 <h2 class="signin-heading">Register a new account</h2>
+                <ul>
+                {% for message in get_flashed_messages() %}
+                    <li>{{message}} </li>
+                {% endfor %}
+                </ul>
                 <input type="text" class="form-control" placeholder="Username" name="username">
                 <input type="password" class="form-control" placeholder="Password" name="password">
                 <input type="password" class="form-control" placeholder="Password" name="password_verify">
